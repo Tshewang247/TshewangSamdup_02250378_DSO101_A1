@@ -1,1 +1,0 @@
-https://github.com/Tshewang247/TshewangSamdup_02250378_DSO101_A1.git
