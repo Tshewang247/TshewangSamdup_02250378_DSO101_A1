@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="2" failures="0" errors="0" time="0.68">
+  <testsuite name="Todo API" errors="0" failures="0" skipped="0" timestamp="2026-06-09T12:20:39" time="0.548" tests="2">
+    <testcase classname="Todo API basic test passes" name="Todo API basic test passes" time="0.003">
+    </testcase>
+    <testcase classname="Todo API todo item has required fields" name="Todo API todo item has required fields" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
