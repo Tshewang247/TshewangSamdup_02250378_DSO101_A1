@@ -1,16 +1,37 @@
-name: Deploy to Render
+name: Build and Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Dummy step
-      run: echo "Code pushed successfully!"
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Backend Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/be-todo:02250378 ./Assignment1/todo-app/backend
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/be-todo:02250378
+
+      - name: Build and Push Frontend Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/fe-todo:02250378 ./Assignment1/todo-app/frontend
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/fe-todo:02250378
+
+      - name: Trigger Render Backend Deployment
+        run: |
+          curl -X POST ${{ secrets.RENDER_BACKEND_WEBHOOK }}
+
+      - name: Trigger Render Frontend Deployment
+        run: |
+          curl -X POST ${{ secrets.RENDER_FRONTEND_WEBHOOK }}
